@@ -3,6 +3,8 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from user.models import UserProfile
+
 User = get_user_model()
 
 
@@ -65,3 +67,10 @@ class LoginSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError("Username and Password are required.")
         return data
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
+        read_only_fields = ('user',)
